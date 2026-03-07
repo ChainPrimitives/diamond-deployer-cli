@@ -1,0 +1,83 @@
+# diamond.config.yaml — Diamond Deployer Configuration
+# Documentation: https://github.com/your-org/diamond-deployer-cli
+
+diamond:
+  name: "MyDiamond"
+  # Path to compiled contract artifacts
+  # Hardhat: ./artifacts | Foundry: ./out
+  artifactsDir: "./artifacts"
+
+networks:
+  localhost:
+    rpc: "http://127.0.0.1:8545"
+    chainId: 31337
+    accounts:
+      mnemonic: "test test test test test test test test test test test junk"
+
+  ethereum:
+    rpc: "${ETH_RPC_URL}"
+    chainId: 1
+    accounts:
+      privateKey: "${DEPLOYER_PRIVATE_KEY}"
+
+  polygon:
+    rpc: "${POLYGON_RPC_URL}"
+    chainId: 137
+    accounts:
+      privateKey: "${DEPLOYER_PRIVATE_KEY}"
+
+  arbitrum:
+    rpc: "${ARBITRUM_RPC_URL}"
+    chainId: 42161
+    accounts:
+      privateKey: "${DEPLOYER_PRIVATE_KEY}"
+
+  base:
+    rpc: "${BASE_RPC_URL}"
+    chainId: 8453
+    accounts:
+      privateKey: "${DEPLOYER_PRIVATE_KEY}"
+
+facets:
+  # Core Diamond facets (EIP-2535 standard)
+  - name: "DiamondCutFacet"
+    contract: "DiamondCutFacet"
+    selectors: "auto"
+
+  - name: "DiamondLoupeFacet"
+    contract: "DiamondLoupeFacet"
+    selectors: "auto"
+
+  - name: "OwnershipFacet"
+    contract: "OwnershipFacet"
+    selectors: "auto"
+
+  # Example: Application facet with initializer
+  # - name: "GovernanceFacet"
+  #   contract: "GovernanceFacet"
+  #   selectors: "auto"
+  #   init:
+  #     contract: "GovernanceInit"
+  #     function: "init"
+  #     args:
+  #       - "100"   # quorum
+  #       - "3600"  # votingPeriod
+
+  # Example: Facet with explicit selectors (bypass auto-detection)
+  # - name: "TokenFacet"
+  #   contract: "TokenFacet"
+  #   selectors:
+  #     - "0x70a08231"  # balanceOf(address)
+  #     - "0xa9059cbb"  # transfer(address,uint256)
+
+verification:
+  etherscan:
+    apiKey: "${ETHERSCAN_API_KEY}"
+
+settings:
+  # Multiply gas estimation by this factor for safety margin
+  gasMultiplier: 1.2
+  # Number of block confirmations to wait per transaction
+  confirmations: 2
+  # Directory to save deployment reports
+  reportDir: "./deployments"
