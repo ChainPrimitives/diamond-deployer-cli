@@ -5,13 +5,14 @@ import { upgradeCommand } from "./commands/upgrade.js";
 import { verifyCommand } from "./commands/verify.js";
 import { statusCommand } from "./commands/status.js";
 import { diffCommand } from "./commands/diff.js";
+import { typegenCommand } from "./commands/typegen.js";
 
 const program = new Command();
 
 program
   .name("diamond")
   .description("CLI for EIP-2535 Diamond proxy deployment and management")
-  .version("1.0.0");
+  .version("1.1.0");
 
 // ─── Commands ─────────────────────────────────────────────────────────────────
 
@@ -63,6 +64,15 @@ program
   .requiredOption("--address <address>", "Diamond contract address")
   .option("-c, --config <path>", "Config file path", "diamond.config.yaml")
   .action(diffCommand);
+
+program
+  .command("typegen")
+  .description("Merge facet ABIs and generate TypeScript types via TypeChain")
+  .option("-c, --config <path>", "Config file path", "diamond.config.yaml")
+  .option("-o, --output <dir>", "Output directory for ABI and types", "./typechain-types")
+  .option("-t, --target <target>", "TypeChain target (ethers-v6, ethers-v5, viem, web3-v1)", "ethers-v6")
+  .option("--no-typechain", "Only output merged ABI, skip TypeChain type generation", false)
+  .action(typegenCommand);
 
 // ─── Parse ────────────────────────────────────────────────────────────────────
 
