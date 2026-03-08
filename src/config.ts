@@ -44,7 +44,7 @@ export async function loadConfig(configPath: string): Promise<DiamondConfig> {
   validateConfig(parsed, resolved);
 
   // Resolve env vars before returning
-  const config = resolveEnvVarsDeep(parsed) as DiamondConfig;
+  const config = resolveEnvVarsDeep(parsed) as unknown as DiamondConfig;
 
   // Apply defaults
   config.settings = {

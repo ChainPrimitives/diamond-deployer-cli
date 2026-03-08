@@ -2,8 +2,7 @@ import path from "path";
 import fs from "fs-extra";
 import chalk from "chalk";
 
-const TEMPLATE_PATH = new URL("../../templates/diamond.config.yaml", import.meta.url);
-
+const TEMPLATE_PATH = path.join(__dirname, "../../templates/diamond.config.yaml");
 export async function initCommand(options: {
   dir: string;
   force: boolean;
